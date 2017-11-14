@@ -1,6 +1,6 @@
 # Datasets
 
-[![Build Status](https://travis-ci.org/UCLSPP/datasets.svg?branch=master)](https://travis-ci.org/UCLSPP/datasets)
+[![Build Status](https://travis-ci.org/altaf-ali/datasets.svg?branch=master)](https://travis-ci.org/altaf-ali/datasets)
 
 Project for hosting datasets. 
 
