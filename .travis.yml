@@ -1,31 +1,30 @@
 language: r
 sudo: false
-dist: trusty
-
-addons:
-  apt:
-    sources:
-      - sourceline: deb http://neurodeb.pirsquared.org trusty main
-    packages:
-      - libnlopt-dev
 
 cache:
   packages: true
   directories:
-    - $TRAVIS_BUILD_DIR/_site
+  - "$TRAVIS_BUILD_DIR/_site"
 
 env:
   global:
-    - GIT_AUTHOR_NAME: Altaf Ali
-    - GIT_AUTHOR_EMAIL: altaf@fastmail.com
-    - secure: qYEogHsKvwmOKKY6mL74L4bUq5eXxp0m12NEgPa7V3FJ3CgwCv4G59mD8Uxqu1feassVvmBxLdmwnJhKmaDiq4VPkvEyBjOYHiin4VjaLxOhPgTxnqKq2MktEZ4aqIjZ5M93iHrq7C8blspDcaVGVmSEFuAGFt9El4TuP1OgxS42N1Hv8TvtAaaV9EAzrX+rz47HunuWhsvglLwusGBy/Ruuv/NevW57yjoo2wQQ4Pm+aVINxO+hGj8FH0wFYc84oXN8Ee1WbzISeCISMj5uY++w1xxsU5+/t8rMUaULWxqr2Wqegwm6rn7PgQLy12sKLwav4mqSRTaxW+F2wETx1v6mClcGVdklDtj0h0YNSWSTZAsYc5n1DRG8W/efnR0A2q17Ze7RZmWSmVisdlpJCZGZXznD0k1sjktp8RgcWqEAxANZLue+HFeqsEjnNvb/yTqE6cRlYUE80+J50cyQ/B9tBazv1zaxWuyxWgx+LOnpHGWOC+t2NQX3LLaLpL6PGTgWJ9LpLGVDyEn1f1kfW0P3HlyEI3ITS7YWWcKppWWHj/OlYRzvS5PAqg0ey9iAsq81YK+VOdMPdCePjg0lzYE1duxq6VHxwbMsqOKY5Fhpw11XtJeDhb/acuUV+1KJIOK4lmwqgShI77XAH83f+/e/nFU7OOr4gwz/cQ/Vao4=
+    secure: wXvpGIAnJMIoeAorbQDS3o2wNFpNtl2h2O4ExKkQlR39p6rJuMjE47+0rEAzQdXtfe5OaBhfwj463Rd2bAC/e+pQc39ioVTJtGeZdfeKJQ9/e9Wt3LO7NyO7OIjtrHG49dO9ZxWAiZKXoUaKnKW+MdFTYIoF7wBrxmAPWZJgF8WCCRbgI/w/8+e7MwPw3UoTvYRoIyN2TLKG10VP8jsVxyE4+2IwYpyoNqxTxmGqKMxTgSVe9ejiJxcXgDvYE9xcZGESVYgd4ish6ngvX7WIavIU4JtfUmjPFUyVjaH/LAjOkWMwKmbPvtE6HXM53l2G/gR8jWyx5FMEnQBBQ0P41CJmUqMORHTBofK3Wna8zf3krkGY+k7bGLKaeQTuvmJu7Cl9gO5WNSxf0Oxkh3SxVzHn7QDX2ZKU86GLtMJw1LIIz7ZlhfgQi2k1Hoq7ZtMCEgg6XyU2KX9BxY3bTxDuZYb4Z4haWXPz9Cmkq+rQElfoKWHtnsj694shNYZFRfBWVWb0MY0G41Ijpb8PgdZ1SABFIZMVKLHYVTSu9g9jgBl3Dt72N8G4lm0BMWIIU/IylCgW3qAS7hI45Sobdwii9IAeJy2xADnPXMt0t3btQ8KXM7y/lHQ1gQ2A/lU5LrnDjlB29crKysO87eEP39NgTmNAmhQvIKYGiy6cd0M5Ex4=
 
 script:
-  - make -f build.mk publish
+- make -f build.mk
+
+install:
+- R -e 'devtools::install_deps(dep = TRUE)'
+- R -e 'devtools::install_version("rmarkdown", version = "1.5", repos = "http://cran.us.r-project.org")'
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  on:
+    branch: master
+  local_dir: _site
+  github_token: "$GITHUB_TOKEN"
 
 notifications:
   email: false
-  slack:
-    rooms:
-      - secure: DSWbaupEfku/IbTIICJwcfkAkhUpdkTn+4QDcz7LZTOykd9McphAw5ezikIRmtnFdAafLxb0LvnjQ0VwumfU58S2Tbd9GTBT504RGVDqRGdfCDrVt4Q833JsZ+X7ZaPIS0AfBqGsLltpTzijQ6pjC6eku1w5kqAURQOrWCzujZ/qvmVH/Y1HUE364caNE3qHeDd05VIbmsgMrKwYHkUBxmfhLrCVe4/Zuo7BuzaTd6ELeCDTaBrlO7ibeDm/PtLmUaViUYf3g2tHPJKZ4gwG46ZEOTjI+k6FTCzR7UGF4qpkZtBK02AJgF7I5aenYqcL0uib51zyLI9LSJWS2UUKvH8yFEgr+/OVd8a8Fxf+nnG17uUBDZixlSKXq1nXE5FswkDFYwYT3A7dVkFtJQXBQ0dX9a46L2+vyl8IkudR2YAIV5Pabb+/8gvEWG4cw+HHEfK6m/PijGufsnRZ7eJnHSDLl/UIxHHEqtUjeTT44WXVMad5C4sIpeK/JqdOk+Jn/q+6OYhZnamGHE2QxLl2QwEAP9OBuJuYK4lLBBNSbg1TgJU75i5UF9p9oMmW3ZT1Qj+KFyrqufnXC9GYtZ8FsT33HM6lWaS9L4U0MvvNSvEEjLM3hjlrP+nea+2Kyu7FX+LZPfRAFi6ekStKtNJZqM6b0IF4y4tOhJoaxhJkVDA=
-      - secure: bzz8qDOcCB8po7oOS3kS+S+Ycv1SSDixD0AQjT8/oMcybUTbLVyLElsA+t7iZVxN7jQevd4GHECIAkFF5FuqDxjwujVBW2bbRsaTdYFBlxJfepDWa1wJFgVhue/Kl1WRNG9YvpJuf2UEhmj0sHvlUidhr3knhZJOmbSXmLnZY0lHXVtEALuWHjrnqc+/OOTR1FFVrDv7l04EFLDfmRFsrRwDSZCs+tqm1OIvdhm+vvxn5T8mGShGEZg3LxMWe9FqAL7He5P2ktGDDhCBHMrgSdxk9ayMzlUXLWTZVq3ybdfSGsMukX5p+EtLEBZUznFgpRLvQif5Vlkj85s2tjMs40JumaZMtAtpk1U52EtMTYt+OS5shpSeb+n1fyA68O/KLyK57VnAlOmevi+RFCBTgHpz2AO7XGfobLWrc/K24f27Yd2bCkG/ag1yaK4TzOi5jP4wpLJfxBMQUpFTowYOMawlXkGam5mR7Jb+NVAqYueuT4FDvfTc4W1kAXak69mqulJ0xv+tAEuJuWIsWQgFaucAIbbYTN1MVrEaxEf3rWR2frBNknHHuu3oIQdexAyk5zrUtoajCGUKn5x8rEbuOKXC8eCR+eRxt0sjJ4rywN3CGRVeU41+jTLXsReSsOrug/yzkzFPQ+CHjRciUIna3admvFGEYNT7waMehnGOSIQ=
+
