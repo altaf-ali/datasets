@@ -11,7 +11,7 @@ env:
     secure: wXvpGIAnJMIoeAorbQDS3o2wNFpNtl2h2O4ExKkQlR39p6rJuMjE47+0rEAzQdXtfe5OaBhfwj463Rd2bAC/e+pQc39ioVTJtGeZdfeKJQ9/e9Wt3LO7NyO7OIjtrHG49dO9ZxWAiZKXoUaKnKW+MdFTYIoF7wBrxmAPWZJgF8WCCRbgI/w/8+e7MwPw3UoTvYRoIyN2TLKG10VP8jsVxyE4+2IwYpyoNqxTxmGqKMxTgSVe9ejiJxcXgDvYE9xcZGESVYgd4ish6ngvX7WIavIU4JtfUmjPFUyVjaH/LAjOkWMwKmbPvtE6HXM53l2G/gR8jWyx5FMEnQBBQ0P41CJmUqMORHTBofK3Wna8zf3krkGY+k7bGLKaeQTuvmJu7Cl9gO5WNSxf0Oxkh3SxVzHn7QDX2ZKU86GLtMJw1LIIz7ZlhfgQi2k1Hoq7ZtMCEgg6XyU2KX9BxY3bTxDuZYb4Z4haWXPz9Cmkq+rQElfoKWHtnsj694shNYZFRfBWVWb0MY0G41Ijpb8PgdZ1SABFIZMVKLHYVTSu9g9jgBl3Dt72N8G4lm0BMWIIU/IylCgW3qAS7hI45Sobdwii9IAeJy2xADnPXMt0t3btQ8KXM7y/lHQ1gQ2A/lU5LrnDjlB29crKysO87eEP39NgTmNAmhQvIKYGiy6cd0M5Ex4=
 
 before_script:
-- R -e 'devtools::install_version("rmarkdown", version = "1.5", repos = "http://cran.us.r-project.org")'
+- R -e 'devtools::install_version("rmarkdown", version = "1.6", repos = "http://cran.us.r-project.org")'
 
 script:
 - make -f build.mk
